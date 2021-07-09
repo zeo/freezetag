@@ -12,6 +12,7 @@ namespace FreezeTag.UI.Hud
 			
 			// TODO: hud
 			RootPanel.AddChild<RoundInfo>();
+			RootPanel.AddChild<ChatBox>();
 		}
 	}
 }
