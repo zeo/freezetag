@@ -1,0 +1,21 @@
+﻿{
+	"name": "Freeze Tag",
+	"version": "1.0",
+	"sharedassets": "*.*",
+
+	"depends": 
+	[
+		"base",
+		"citizen",
+		"rust"
+	],
+	
+	"gamemodes":
+	[
+		{
+			"name": "freezetag",
+			"title": "Freeze Tag",
+			"description": "A freeze tag gamemode"
+		}
+	]
+}
