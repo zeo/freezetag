@@ -8,17 +8,17 @@ namespace FreezeTag.UI.Hud
 {
 	public class RoundInfo : Panel
 	{
-		private Panel Container;
-		private readonly Label RoundName;
-		private readonly Label RoundTime;
-		
+		private readonly Panel _container;
+		private readonly Label _name;
+		private readonly Label _time;
+
 		public RoundInfo()
 		{
 			StyleSheet.Load( "/ui/hud/RoundInfo.scss" );
 
-			Container = Add.Panel( "RoundContainer" );
-			RoundName = Container.Add.Label( "", "RoundName" );
-			RoundTime = Container.Add.Label( "", "RoundTime" );
+			_container = Add.Panel( "RoundContainer" );
+			_name = _container.Add.Label( classname: "RoundName" );
+			_time = _container.Add.Label( classname: "RoundTime" );
 		}
 
 		public override void Tick()
@@ -28,14 +28,18 @@ namespace FreezeTag.UI.Hud
 			var round = Game.Instance?.Round;
 			if ( round is null ) return;
 
-			if ( Local.Pawn is not PlayerPawn player ) return;
+			_container.SetClass( "HasDuration", round.HasDuration );
+			_name.Text = round.RoundName;
 
-			var team = player.Team.ToString();
-			
-			var time = round.HasDuration ? round.TimeUntilRoundEnd.ToString() : "no time";
-			
-			RoundName.Text = round.RoundName;
-			RoundTime.Text = round.HasDuration ? Math.Round(round.TimeUntilRoundEnd) + " seconds left" : "";
+			_time.Style.Display = round.HasDuration ? DisplayMode.Flex : DisplayMode.None;
+			_time.Style.Dirty();
+
+			if ( round.HasDuration )
+			{
+				_time.Text = Math.Ceiling( round.TimeUntilRoundEnd ) + " seconds left";
+			}
+
+			if ( Local.Pawn is not PlayerPawn player ) return;
 		}
 	}
 }
