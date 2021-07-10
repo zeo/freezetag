@@ -14,7 +14,7 @@ namespace FreezeTag.Player
 		{
 			base.Spawn();
 
-			LastCamera = new FirstPersonCamera();
+			LastCamera = new ThirdPersonCamera();
 		}
 
 		public override void Respawn()
@@ -56,7 +56,7 @@ namespace FreezeTag.Player
 		
 		public override void StartTouch( Entity other )
 		{
-			base.StartTouch( other );
+			Log.Info( "eteetetete" );
 			
 			if ( other is not PlayerPawn player ) return;
 		

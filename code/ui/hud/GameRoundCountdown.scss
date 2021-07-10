@@ -1,0 +1,23 @@
+@keyframes CountdownText {
+  0%, 100% {
+    scale: 0;
+  }
+  
+  50% {
+    scale: 1;
+  }
+}
+
+GameRoundCountdown {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background-color: red;
+  
+  .Text {
+    color: white;
+    font-size: 64px;
+    animation-name: CountdownText;
+    animation-duration: 1s;
+  }
+}
