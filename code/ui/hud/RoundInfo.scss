@@ -16,10 +16,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: Poppins, sans-serif;
     
     .RoundName {
-      font-size: 16px;
       font-weight: 700;
+    }
+    
+    &:not(.HasDuration) .RoundName {
+      font-size: 24px;
+    }
+    
+    &.HasDuration .RoundName {
+      font-size: 16px;
     }
     
     .TimeLeft {
