@@ -11,8 +11,6 @@ namespace FreezeTag.Rounds
 
 		public override void OnStarted()
 		{
-			Log.Info( "test" );
-			
 			if ( Host.IsServer )
 			{
 				MovePlayersToSpawnpoints();
@@ -30,7 +28,6 @@ namespace FreezeTag.Rounds
 			var players = Game.Players.ToList();
 			for (var i = 0; i < players.Count; i++)
 			{
-				Log.Info( "dwadaw" );
 				players[i].Team = i == 0 ? PlayerTeam.Tagger : PlayerTeam.Player;
 			}
 		}

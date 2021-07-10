@@ -1,6 +1,4 @@
-﻿using Sandbox;
-
-namespace FreezeTag.Rounds
+﻿namespace FreezeTag.Rounds
 {
 	public partial class PreparationRound : BaseRound
 	{
@@ -9,7 +7,6 @@ namespace FreezeTag.Rounds
 
 		public override void OnFinished()
 		{
-			Log.Info( "called" );
 			Game.ChangeRound( new GameRound() );
 		}
 	}

@@ -10,8 +10,6 @@ namespace FreezeTag.Rounds
 
 		public override void OnPlayerJoined( Client client )
 		{
-			Log.Info( "joined" );
-			
 			if ( GameUtils.HasEnoughPlayers() )
 			{
 				Finish();
