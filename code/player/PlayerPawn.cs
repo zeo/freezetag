@@ -8,6 +8,7 @@ namespace FreezeTag.Player
 		[Net, OnChangedCallback] public bool IsFrozen { get; set; } = false;
 		
 		private ICamera LastCamera { get; set; }
+		private ModelEntity collisionVolume { get; set; }
 
 		public override void Spawn()
 		{
@@ -35,21 +36,30 @@ namespace FreezeTag.Player
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
+			
+			collisionVolume = new ModelEntity {
+				CollisionGroup = CollisionGroup.Trigger,
+				Transmit = TransmitType.Never, 
+				Position = Position,
+				EnableTouch = true,
+				Parent = this,
+			};
+
+			Vector3 collOffset = new Vector3( 2, 2, 2 );
+			collisionVolume.SetupPhysicsFromAABB( PhysicsMotionType.Keyframed, CollisionBounds.Mins - collOffset, CollisionBounds.Maxs + collOffset );
 		}
 
 		public void OnIsFrozenChanged()
 		{
 			Controller = IsFrozen ? null : new WalkController();
 		}
-
+		
 		public override void StartTouch( Entity other )
 		{
 			base.StartTouch( other );
-
-			Log.Info( "eteetetete" );
 			
 			if ( other is not PlayerPawn player ) return;
-
+		
 			Log.Info( "---" );
 			Log.Info( player.GetClientOwner().Name );
 			Log.Info( player.Team.ToString() );
