@@ -6,7 +6,7 @@ namespace FreezeTag.Rounds
 {
 	public class GameRound : BaseRound
 	{
-		public override string RoundName => "PLAY!";
+		public override string RoundName => "In Game";
 		public override float RoundTime => 500f;
 
 		public override void OnStarted()

@@ -1,4 +1,5 @@
-﻿using FreezeTag.Player;
+﻿using System;
+using FreezeTag.Player;
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
@@ -7,11 +8,17 @@ namespace FreezeTag.UI.Hud
 {
 	public class RoundInfo : Panel
 	{
-		private readonly Label _label;
+		private Panel Container;
+		private readonly Label RoundName;
+		private readonly Label RoundTime;
 		
 		public RoundInfo()
 		{
-			_label = Add.Label( "dwadwa" );
+			StyleSheet.Load( "/ui/hud/RoundInfo.scss" );
+
+			Container = Add.Panel( "RoundContainer" );
+			RoundName = Container.Add.Label( "", "RoundName" );
+			RoundTime = Container.Add.Label( "", "RoundTime" );
 		}
 
 		public override void Tick()
@@ -27,7 +34,8 @@ namespace FreezeTag.UI.Hud
 			
 			var time = round.HasDuration ? round.TimeUntilRoundEnd.ToString() : "no time";
 			
-			_label.Text = round.RoundName + " - " + time + " - " + team;
+			RoundName.Text = round.RoundName;
+			RoundTime.Text = round.HasDuration ? Math.Round(round.TimeUntilRoundEnd) + " seconds left" : "";
 		}
 	}
 }
