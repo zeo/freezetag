@@ -1,4 +1,5 @@
-﻿using FreezeTag.Utils;
+﻿using FreezeTag.Player;
+using FreezeTag.Utils;
 using Sandbox;
 
 namespace FreezeTag.Rounds
@@ -8,7 +9,7 @@ namespace FreezeTag.Rounds
 		public override string RoundName => "Waiting for Players";
 		public override bool HasDuration => false;
 
-		public override void OnPlayerJoined( Client client )
+		public override void OnPlayerJoined( Client client, PlayerPawn _ )
 		{
 			if ( GameUtils.HasEnoughPlayers() )
 			{

@@ -1,14 +1,18 @@
-﻿using Sandbox;
+﻿using FreezeTag.Rounds;
+using Sandbox;
 
 namespace FreezeTag.Player
 {
 	public partial class PlayerPawn : Sandbox.Player
 	{
 		[Net] public PlayerTeam Team { get; set; } = PlayerTeam.Undetermined;
-		[Net, OnChangedCallback] public bool IsFrozen { get; set; } = false;
 		
+		[Net, Predicted, Local]
+		public bool IsFrozen { get; set; } = false;
+
 		private ICamera LastCamera { get; set; }
-		private ModelEntity collisionVolume { get; set; }
+
+		private ModelEntity CollisionVolume { get; set; }
 
 		public override void Spawn()
 		{
@@ -20,10 +24,10 @@ namespace FreezeTag.Player
 		public override void Respawn()
 		{
 			base.Respawn();
-			
+
 			SetModel( "models/citizen/citizen.vmdl" );
 
-			Controller = new WalkController();
+			Controller = new PlayerController();
 			Animator = new StandardPlayerAnimator();
 			Camera = LastCamera;
 
@@ -32,48 +36,59 @@ namespace FreezeTag.Player
 				DevController = null;
 			}
 
+			Dress();
+
 			EnableAllCollisions = true;
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
-			
-			collisionVolume = new ModelEntity {
+
+			CollisionVolume = new ModelEntity
+			{
 				CollisionGroup = CollisionGroup.Trigger,
-				Transmit = TransmitType.Never, 
+				Transmit = TransmitType.Never,
 				Position = Position,
 				EnableTouch = true,
 				Parent = this,
 			};
 
-			Vector3 collOffset = new Vector3( 2, 2, 2 );
-			collisionVolume.SetupPhysicsFromAABB( PhysicsMotionType.Keyframed, CollisionBounds.Mins - collOffset, CollisionBounds.Maxs + collOffset );
+			var collOffset = new Vector3( 2, 2, 2 );
+
+			CollisionVolume.SetupPhysicsFromAABB(
+				PhysicsMotionType.Keyframed,
+				CollisionBounds.Mins - collOffset,
+				CollisionBounds.Maxs + collOffset
+			);
 		}
 
-		public void OnIsFrozenChanged()
+		public void Freeze()
 		{
-			Controller = IsFrozen ? null : new WalkController();
+			IsFrozen = true;
+			((PlayerController) Controller).IsFrozen = true;
+			
+			Game.Instance.Round.OnPlayerFrozen( this );
 		}
-		
+
+		public void Unfreeze()
+		{
+			IsFrozen = false;
+			((PlayerController)Controller).IsFrozen = false;
+		}
+
 		public override void StartTouch( Entity other )
 		{
-			Log.Info( "eteetetete" );
-			
+			base.StartTouch( other );
+
 			if ( other is not PlayerPawn player ) return;
-		
-			Log.Info( "---" );
-			Log.Info( player.GetClientOwner().Name );
-			Log.Info( player.Team.ToString() );
-			Log.Info( "----" );
-			
+			if ( Game.Instance.Round is not GameRound ) return;
+
 			if ( Team == PlayerTeam.Tagger && player.Team == PlayerTeam.Player && !player.IsFrozen )
 			{
-				Log.Info( "TAGGED" );
-				player.IsFrozen = true;
-			} 
+				player.Freeze();
+			}
 			else if ( !IsFrozen && Team == PlayerTeam.Player && player.Team == PlayerTeam.Player && player.IsFrozen )
 			{
-				Log.Info( "UNTAGGED" );
-				player.IsFrozen = false;
+				player.Unfreeze();
 			}
 		}
 	}

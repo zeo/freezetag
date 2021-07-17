@@ -25,16 +25,41 @@ namespace FreezeTag.Rounds
 
 		private void AssignTeams()
 		{
+			Host.AssertServer();
+
 			var players = Game.Players.ToList();
-			for (var i = 0; i < players.Count; i++)
+			for ( var i = 0; i < players.Count; i++ )
 			{
-				players[i].Team = i == 0 ? PlayerTeam.Tagger : PlayerTeam.Player;
+				players[i].Team = i == 1 ? PlayerTeam.Tagger : PlayerTeam.Player;
 			}
+		}
+
+		public override void OnPlayerJoined( Client client, PlayerPawn pawn )
+		{
+			pawn.Team = PlayerTeam.Player;
 		}
 
 		public override void OnFinished()
 		{
+			// Unfreeze all players
+			foreach (var playerPawn in Game.Players)
+			{
+				playerPawn.IsFrozen = false;
+			}
+
 			Game.ChangeRound( new StatisticsRound() );
+		}
+
+		public override void OnPlayerFrozen( PlayerPawn pawn )
+		{
+			var shouldContinue = Entity.All
+				.OfType<PlayerPawn>()
+				.Any( p => p.Team == PlayerTeam.Player && !p.IsFrozen );
+
+			if ( !shouldContinue )
+			{
+				Finish();
+			}
 		}
 	}
 }

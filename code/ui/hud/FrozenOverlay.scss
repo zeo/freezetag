@@ -1,0 +1,9 @@
+FrozenOverlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  
+  &.Frozen {
+    background-color: rgba(aqua, 0.02);
+  }
+}

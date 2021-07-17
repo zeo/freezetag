@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using FreezeTag.Player;
+using Sandbox;
 
 namespace FreezeTag.Rounds
 {
@@ -8,11 +9,6 @@ namespace FreezeTag.Rounds
 		/// The name of the round, shown in the UI
 		/// </summary>
 		public virtual string RoundName => "Unknown Round";
-
-		/// <summary>
-		/// The icon of the round, shown in the UI
-		/// </summary>
-		public virtual string RoundIcon => "";
 
 		/// <summary>
 		/// Indicates if the round has a duration.
@@ -75,7 +71,12 @@ namespace FreezeTag.Rounds
 			//
 		}
 
-		public virtual void OnPlayerJoined( Client client )
+		public virtual void OnPlayerJoined( Client client, PlayerPawn pawn )
+		{
+			//
+		}
+
+		public virtual void OnPlayerFrozen( PlayerPawn pawn )
 		{
 			//
 		}

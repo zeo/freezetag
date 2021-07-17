@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using FreezeTag.Config;
 using FreezeTag.Player;
 using Sandbox;
 
@@ -11,12 +10,12 @@ namespace FreezeTag.Utils
 		{
 			var playerCount = Entity.All.OfType<PlayerPawn>().Count();
 
-			return (int) MathX.Floor( playerCount / FreezeTagConfig.TaggersPerPlayers ) + 1;
+			return (int) MathX.Floor( playerCount / Game.PlayersPerTagger ) + 1;
 		}
 		
 		public static bool HasEnoughPlayers()
 		{
-			return Entity.All.OfType<PlayerPawn>().Count() >= FreezeTagConfig.PlayersNeeded;
+			return Entity.All.OfType<PlayerPawn>().Count() >= Game.PlayersNeeded;
 		}
 	}
 }

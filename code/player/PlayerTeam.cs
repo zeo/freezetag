@@ -4,6 +4,7 @@
 	{
 		Undetermined,
 		Tagger,
-		Player
+		Player,
+		Spectator // TODO
 	}
 }

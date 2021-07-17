@@ -32,7 +32,7 @@ namespace FreezeTag
 
 			client.Pawn = pawn;
 			
-			Round.OnPlayerJoined( client );
+			Round.OnPlayerJoined( client, pawn );
 		}
 
 		public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )

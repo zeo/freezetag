@@ -1,23 +1,25 @@
-@keyframes CountdownText {
-  0%, 100% {
-    scale: 0;
-  }
-  
-  50% {
-    scale: 1;
-  }
-}
-
 GameRoundCountdown {
   position: absolute;
   left: 50%;
   top: 50%;
-  background-color: red;
+  transition: transform 0.2s ease-in;
+  display: flex;
   
-  .Text {
+  &.Hidden {
+    //display: none;
+  }
+  
+  &.ScalingUp {
+    transform: scale(1);
+  }
+  
+  &.ScalingDown {
+    transform: scale(0);
+  }
+
+  .Count {
+    text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
     color: white;
-    font-size: 64px;
-    animation-name: CountdownText;
-    animation-duration: 1s;
+    font-size: 100px;
   }
 }

@@ -4,6 +4,9 @@ namespace FreezeTag.Rounds
 {
 	public class StatisticsRound : BaseRound
 	{
+		public override string RoundName => "Round Ended";
+		public override float RoundTime => 10f;
+		
 		public override void OnStarted()
 		{
 			// TODO: open statistics panel
