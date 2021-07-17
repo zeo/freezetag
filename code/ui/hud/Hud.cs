@@ -12,9 +12,11 @@ namespace FreezeTag.UI.Hud
 			
 			// TODO: hud
 			RootPanel.AddChild<RoundInfo>();
-			RootPanel.AddChild<ChatBox>();
 			RootPanel.AddChild<GameRoundCountdown>();
 			RootPanel.AddChild<FrozenOverlay>();
+
+			RootPanel.AddChild<Scoreboard>();
+			RootPanel.AddChild<ChatBox>();
 		}
 	}
 }
